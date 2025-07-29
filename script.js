@@ -1,4 +1,4 @@
-// your JS code here
+// your JS code here.
 
 const questions = [
   {
@@ -30,29 +30,25 @@ const questions = [
 
 const questionsElement = document.getElementById("questions");
 const submitButton = document.getElementById("submit");
-const scoreDisplay = document.getElementById("score");
+const scoreElement = document.getElementById("score");
 
-let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || {};
-
-// Show score if it exists in localStorage
-const savedScore = localStorage.getItem("score");
-if (savedScore !== null) {
-  scoreDisplay.textContent = `Your score is ${savedScore} out of ${questions.length}.`;
-}
+// Load progress from sessionStorage
+let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || [];
 
 function renderQuestions() {
   questionsElement.innerHTML = "";
 
-  questions.forEach((q, i) => {
-    const questionDiv = document.createElement("div");
+  for (let i = 0; i < questions.length; i++) {
+    const q = questions[i];
+    const container = document.createElement("div");
 
     const questionTitle = document.createElement("p");
-    questionTitle.innerHTML = `<strong>${i + 1}. ${q.question}</strong>`;
-    questionDiv.appendChild(questionTitle);
+    questionTitle.innerHTML = `<strong>${q.question}</strong>`;
+    container.appendChild(questionTitle);
 
-    q.choices.forEach((choice) => {
+    for (let j = 0; j < q.choices.length; j++) {
+      const choice = q.choices[j];
       const label = document.createElement("label");
-
       const input = document.createElement("input");
       input.type = "radio";
       input.name = `question-${i}`;
@@ -60,8 +56,10 @@ function renderQuestions() {
 
       if (userAnswers[i] === choice) {
         input.checked = true;
+        input.setAttribute("checked", "true"); // For Cypress
       }
 
+      // Save to sessionStorage when clicked
       input.addEventListener("change", () => {
         userAnswers[i] = choice;
         sessionStorage.setItem("progress", JSON.stringify(userAnswers));
@@ -69,24 +67,33 @@ function renderQuestions() {
 
       label.appendChild(input);
       label.appendChild(document.createTextNode(choice));
-      questionDiv.appendChild(label);
-    });
+      container.appendChild(label);
+    }
 
-    questionsElement.appendChild(questionDiv);
-  });
+    questionsElement.appendChild(container);
+  }
 }
 
+// Submit & score calculation
 submitButton.addEventListener("click", () => {
   let score = 0;
 
-  questions.forEach((q, i) => {
-    if (userAnswers[i] === q.answer) {
+  for (let i = 0; i < questions.length; i++) {
+    if (userAnswers[i] === questions[i].answer) {
       score++;
     }
-  });
+  }
 
-  localStorage.setItem("score", score);
-  scoreDisplay.textContent = `Your score is ${score} out of ${questions.length}.`;
+  const scoreText = `Your score is ${score} out of ${questions.length}.`;
+  scoreElement.textContent = scoreText;
+
+  localStorage.setItem("score", score.toString());
 });
 
 renderQuestions();
+
+// Display score on reload if it exists
+const savedScore = localStorage.getItem("score");
+if (savedScore !== null) {
+  scoreElement.textContent = `Your score is ${savedScore} out of ${questions.length}.`;
+}
