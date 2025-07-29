@@ -1,1 +1,88 @@
-/*  your css code here. If applicable */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 3rem;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.05rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.3rem solid #1e88e5;
+  display: inline-block;
+}
+
+#questions {
+  max-width: 80rem;
+  margin: 0 auto;
+  background: #fff;
+  padding: 3rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.08);
+}
+
+#questions > div {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 0.1rem solid #ddd;
+}
+
+p {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 0.8rem;
+  transform: scale(1.5);
+  vertical-align: middle;
+}
+
+#submit {
+  display: block;
+  margin: 3rem auto;
+  padding: 1.2rem 3rem;
+  font-size: 1.6rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#submit:hover {
+  background-color: #43a047;
+}
+
+#score {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+  font-weight: bold;
+  color: #1e88e5;
+}
